@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="application.properties"/>
+
+    <!--配置context-->
+    <!--targetRuntime配置运行模板，会影响 dao 和 mapper.xml的内容-->
+    <context id="mysql" targetRuntime="MyBatis3">
+
+        <!--给生成的Java模型对象增加了equals和hashCode方法的插件-->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+
+        <!-- 注释 -->
+        <commentGenerator>
+            <!-- 是否不生成注释 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 不希望生成的注释中包含时间戳 -->
+            <property name="suppressDate" value="true"/>
+            <!-- 添加 db 表中字段的注释 -->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="${spring.datasource.driverClassName}"
+                        connectionURL="${spring.datasource.url}"
+                        userId="${spring.datasource.username}"
+                        password="${spring.datasource.password}">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="model" targetProject="src/main/java/">
+            <!-- 是否让schema作为包的后缀，默认为false -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否针对string类型的字段在set方法中进行修剪，默认false -->
+            <property name="trimStrings" value="false"/>
+        </javaModelGenerator>
+
+        <!-- 生成Mapper.xml文件 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成 XxxMapper.java 接口-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="mapper"
+                             targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- schema为数据库名，oracle需要配置，mysql不需要配置。
+     tableName为对应的数据库表名
+     domainObjectName 是要生成的实体类名(可以不指定)
+     enableXXXByExample 默认为 true， 为 true 会生成一个对应Example帮助类，帮助你进行条件查询，不想要可以设为false
+     -->
+        <table schema="" tableName="customers" domainObjectName="Customer">
+            <!--是否使用实际列名,默认为false-->
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="" tableName="user" domainObjectName="User">
+            <!--是否使用实际列名,默认为false-->
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="" tableName="role" domainObjectName="Role">
+            <!--是否使用实际列名,默认为false-->
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="" tableName="permission" domainObjectName="Permission">
+            <!--是否使用实际列名,默认为false-->
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="" tableName="role_permissions" domainObjectName="RolePermission">
+            <!--是否使用实际列名,默认为false-->
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="" tableName="user_role" domainObjectName="UserRole">
+            <!--是否使用实际列名,默认为false-->
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

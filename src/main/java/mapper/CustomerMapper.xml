@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CustomerMapper">
+  <resultMap id="BaseResultMap" type="model.Customer">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cardNumber" jdbcType="VARCHAR" property="cardNumber" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="balance" jdbcType="DOUBLE" property="balance" />
+    <result column="companyName" jdbcType="VARCHAR" property="companyName" />
+    <result column="companyAddress" jdbcType="VARCHAR" property="companyAddress" />
+    <result column="companyCreditCode" jdbcType="VARCHAR" property="companyCreditCode" />
+    <result column="legalRepName" jdbcType="VARCHAR" property="legalRepName" />
+    <result column="legalRepId" jdbcType="VARCHAR" property="legalRepId" />
+    <result column="legalRepAddr" jdbcType="VARCHAR" property="legalRepAddr" />
+    <result column="legalRepTel" jdbcType="VARCHAR" property="legalRepTel" />
+    <result column="createdAt" jdbcType="VARCHAR" property="createdAt" />
+    <result column="updatedAt" jdbcType="VARCHAR" property="updatedAt" />
+    <result column="business" jdbcType="VARCHAR" property="business" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, cardNumber, username, balance, companyName, companyAddress, companyCreditCode, 
+    legalRepName, legalRepId, legalRepAddr, legalRepTel, createdAt, updatedAt, business, 
+    deleted
+  </sql>
+  <select id="selectByExample" parameterType="model.CustomerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customers
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customers
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customers
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="model.CustomerExample">
+    delete from customers
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="model.Customer">
+    insert into customers (id, cardNumber, username, 
+      balance, companyName, companyAddress, 
+      companyCreditCode, legalRepName, legalRepId, 
+      legalRepAddr, legalRepTel, createdAt, 
+      updatedAt, business, deleted
+      )
+    values (#{id,jdbcType=INTEGER}, #{cardNumber,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{balance,jdbcType=DOUBLE}, #{companyName,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, 
+      #{companyCreditCode,jdbcType=VARCHAR}, #{legalRepName,jdbcType=VARCHAR}, #{legalRepId,jdbcType=VARCHAR}, 
+      #{legalRepAddr,jdbcType=VARCHAR}, #{legalRepTel,jdbcType=VARCHAR}, #{createdAt,jdbcType=VARCHAR}, 
+      #{updatedAt,jdbcType=VARCHAR}, #{business,jdbcType=VARCHAR}, #{deleted,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="model.Customer">
+    insert into customers
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cardNumber != null">
+        cardNumber,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="companyName != null">
+        companyName,
+      </if>
+      <if test="companyAddress != null">
+        companyAddress,
+      </if>
+      <if test="companyCreditCode != null">
+        companyCreditCode,
+      </if>
+      <if test="legalRepName != null">
+        legalRepName,
+      </if>
+      <if test="legalRepId != null">
+        legalRepId,
+      </if>
+      <if test="legalRepAddr != null">
+        legalRepAddr,
+      </if>
+      <if test="legalRepTel != null">
+        legalRepTel,
+      </if>
+      <if test="createdAt != null">
+        createdAt,
+      </if>
+      <if test="updatedAt != null">
+        updatedAt,
+      </if>
+      <if test="business != null">
+        business,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cardNumber != null">
+        #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null">
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCreditCode != null">
+        #{companyCreditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepName != null">
+        #{legalRepName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepId != null">
+        #{legalRepId,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepAddr != null">
+        #{legalRepAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepTel != null">
+        #{legalRepTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null">
+        #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="model.CustomerExample" resultType="java.lang.Long">
+    select count(*) from customers
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update customers
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardNumber != null">
+        cardNumber = #{record.cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balance != null">
+        balance = #{record.balance,jdbcType=DOUBLE},
+      </if>
+      <if test="record.companyName != null">
+        companyName = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyAddress != null">
+        companyAddress = #{record.companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyCreditCode != null">
+        companyCreditCode = #{record.companyCreditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalRepName != null">
+        legalRepName = #{record.legalRepName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalRepId != null">
+        legalRepId = #{record.legalRepId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalRepAddr != null">
+        legalRepAddr = #{record.legalRepAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalRepTel != null">
+        legalRepTel = #{record.legalRepTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null">
+        createdAt = #{record.createdAt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedAt != null">
+        updatedAt = #{record.updatedAt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.business != null">
+        business = #{record.business,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update customers
+    set id = #{record.id,jdbcType=INTEGER},
+      cardNumber = #{record.cardNumber,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      balance = #{record.balance,jdbcType=DOUBLE},
+      companyName = #{record.companyName,jdbcType=VARCHAR},
+      companyAddress = #{record.companyAddress,jdbcType=VARCHAR},
+      companyCreditCode = #{record.companyCreditCode,jdbcType=VARCHAR},
+      legalRepName = #{record.legalRepName,jdbcType=VARCHAR},
+      legalRepId = #{record.legalRepId,jdbcType=VARCHAR},
+      legalRepAddr = #{record.legalRepAddr,jdbcType=VARCHAR},
+      legalRepTel = #{record.legalRepTel,jdbcType=VARCHAR},
+      createdAt = #{record.createdAt,jdbcType=VARCHAR},
+      updatedAt = #{record.updatedAt,jdbcType=VARCHAR},
+      business = #{record.business,jdbcType=VARCHAR},
+      deleted = #{record.deleted,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Customer">
+    update customers
+    <set>
+      <if test="cardNumber != null">
+        cardNumber = #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="companyName != null">
+        companyName = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null">
+        companyAddress = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCreditCode != null">
+        companyCreditCode = #{companyCreditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepName != null">
+        legalRepName = #{legalRepName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepId != null">
+        legalRepId = #{legalRepId,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepAddr != null">
+        legalRepAddr = #{legalRepAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepTel != null">
+        legalRepTel = #{legalRepTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        createdAt = #{createdAt,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null">
+        updatedAt = #{updatedAt,jdbcType=VARCHAR},
+      </if>
+      <if test="business != null">
+        business = #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Customer">
+    update customers
+    set cardNumber = #{cardNumber,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=DOUBLE},
+      companyName = #{companyName,jdbcType=VARCHAR},
+      companyAddress = #{companyAddress,jdbcType=VARCHAR},
+      companyCreditCode = #{companyCreditCode,jdbcType=VARCHAR},
+      legalRepName = #{legalRepName,jdbcType=VARCHAR},
+      legalRepId = #{legalRepId,jdbcType=VARCHAR},
+      legalRepAddr = #{legalRepAddr,jdbcType=VARCHAR},
+      legalRepTel = #{legalRepTel,jdbcType=VARCHAR},
+      createdAt = #{createdAt,jdbcType=VARCHAR},
+      updatedAt = #{updatedAt,jdbcType=VARCHAR},
+      business = #{business,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
